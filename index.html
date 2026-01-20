@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Refleksi Orang Tua Murid - SDN 19 Pemecutan</title>
+    <link rel="icon" href="https://lh3.googleusercontent.com/d/1s6k8X_7RdGseH26wZ_WlAjZyQL_BIsxo" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            touch-action: manipulation;
+        }
+        .step-content {
+            display: none;
+        }
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Warna Skala Ceria, Vibran & Kontras Tinggi */
+        .radio-1:checked + label { background-color: #ff3b30; color: white; border-color: #d70015; box-shadow: 0 4px 14px rgba(255, 59, 48, 0.4); transform: scale(1.05); }
+        .radio-2:checked + label { background-color: #ff9500; color: white; border-color: #c67100; box-shadow: 0 4px 14px rgba(255, 149, 0, 0.4); transform: scale(1.05); }
+        .radio-3:checked + label { background-color: #007aff; color: white; border-color: #0056b3; box-shadow: 0 4px 14px rgba(0, 122, 255, 0.4); transform: scale(1.05); }
+        .radio-4:checked + label { background-color: #34c759; color: white; border-color: #248a3d; box-shadow: 0 4px 14px rgba(52, 199, 89, 0.4); transform: scale(1.05); }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .touch-target {
+            min-height: 48px;
+            min-width: 48px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-start justify-center p-0 sm:p-4">
+
+    <div class="w-full max-w-2xl bg-white sm:rounded-3xl shadow-xl overflow-hidden border-0 sm:border border-slate-200">
+        
+        <!-- Header -->
+        <header class="bg-indigo-700 p-6 sm:p-8 text-white text-center">
+            <h1 class="text-[10px] sm:text-sm font-bold tracking-[0.2em] uppercase opacity-90">Evaluasi Kualitas Pendidikan</h1>
+            <p class="text-lg sm:text-3xl font-extrabold mt-2 leading-tight whitespace-nowrap">SD NEGERI 19 PEMECUTAN</p>
+            <div class="mt-3 inline-block px-3 py-1 bg-white/20 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide">
+                Semester 1 • T.A 2025/2026
+            </div>
+        </header>
+
+        <div class="p-5 sm:p-10">
+            <div id="customAlert" class="hidden mb-6 p-4 bg-rose-50 border-l-4 border-rose-600 text-rose-900 rounded-lg shadow-sm" role="alert">
+                <div class="flex items-center gap-3">
+                    <span class="text-xl">⚠️</span>
+                    <p id="alertText" class="font-semibold text-sm"></p>
+                </div>
+            </div>
+
+            <form id="reflectionForm" novalidate>
+                
+                <!-- STEP 1: PEMBUKA -->
+                <div id="step1" class="step-content active">
+                    <div class="text-center mb-8">
+                        <div class="mb-6">
+                            <img src="Logo Design.png" alt="Logo SDN 19 Pemecutan" class="h-32 w-auto mx-auto" onerror="this.src='https://via.placeholder.com/150?text=Logo+SDN+7';">
+                        </div>
+                        <h2 class="text-2xl font-bold text-slate-800 mb-4 tracking-tight">Om Swastiastu</h2>
+                        <div class="text-slate-600 leading-relaxed space-y-4 text-base text-left bg-slate-50 p-6 rounded-2xl border border-slate-100 shadow-inner">
+                            <p class="font-medium text-black">Bapak/Ibu orang tua murid yang kami hormati,</p>
+                            <p class="font-medium text-black">
+                                Refleksi ini bertujuan untuk mengevaluasi kualitas penyelenggaraan pendidikan di sekolah kami. Partisipasi Bapak/Ibu sangat berarti bagi kami untuk terus bertumbuh dan memberikan lingkungan belajar terbaik bagi putra-putri kita.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-6 text-[11px] sm:text-sm text-amber-900 text-center rounded-r-lg font-medium italic">
+                        "Seluruh data akan dijaga kerahasiaannya dan digunakan hanya untuk perbaikan kualitas pendidikan sekolah."
+                    </div>
+                    <button type="button" onclick="nextStep(2)" class="touch-target w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all active:scale-[0.98] text-lg">
+                        Mulai isi Form
+                    </button>
+                </div>
+
+                <!-- STEP 2: DATA -->
+                <div id="step2" class="step-content">
+                    <h2 class="text-xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+                        <span class="w-10 h-10 bg-indigo-100 text-indigo-700 flex items-center justify-center rounded-xl">01</span>
+                        Data Identitas
+                    </h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label for="parent_name" class="block text-sm font-bold text-slate-700 mb-2">Nama Orang Tua / Wali <span class="text-rose-500">*</span></label>
+                            <input type="text" id="parent_name" name="parent_name" class="touch-target w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-indigo-500 transition-all text-lg" placeholder="Nama Orang Tua/Wali">
+                        </div>
+                        <div>
+                            <label for="student_name" class="block text-sm font-bold text-slate-700 mb-2">Nama Lengkap Anak <span class="text-rose-500">*</span></label>
+                            <input type="text" id="student_name" name="student_name" class="touch-target w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-indigo-500 transition-all text-lg" placeholder="Nama lengkap siswa">
+                            <p class="mt-2 text-[10px] sm:text-xs text-slate-500 italic">Gunakan nama asli tanpa simbol atau angka.</p>
+                        </div>
+                        <div>
+                            <label for="grade" class="block text-sm font-bold text-slate-700 mb-2">Pilih Kelas <span class="text-rose-500">*</span></label>
+                            <select id="grade" name="grade" class="touch-target w-full px-4 py-3 border-2 border-slate-200 rounded-xl bg-white text-lg">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="1 A">Kelas 1A</option><option value="1 B">Kelas 1B</option><option value="1 C">Kelas 1C</option><option value="1 D">Kelas 1D</option>
+                                <option value="2 A">Kelas 2A</option><option value="2 B">Kelas 2B</option><option value="2 C">Kelas 2C</option><option value="2 D">Kelas 2D</option>
+                                <option value="3 A">Kelas 3A</option><option value="3 B">Kelas 3B</option><option value="3 C">Kelas 3C</option><option value="3 D">Kelas 3D</option>
+                                <option value="4 A">Kelas 4A</option><option value="4 B">Kelas 4B</option><option value="4 C">Kelas 4C</option>
+                                <option value="5 A">Kelas 5A</option><option value="5 B">Kelas 5B</option><option value="5 C">Kelas 5C</option>
+                                <option value="6 A">Kelas 6A</option><option value="6 B">Kelas 6B</option><option value="6 C">Kelas 6C</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 mt-10">
+                        <button type="button" onclick="prevStep(1)" class="touch-target flex-1 bg-slate-100 text-slate-600 font-bold py-3 rounded-2xl hover:bg-slate-200 transition-all">Kembali</button>
+                        <button type="button" onclick="validateStep2()" class="touch-target flex-1 bg-indigo-600 text-white font-bold py-3 rounded-2xl shadow-md transition-all active:scale-95">Lanjutkan</button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: PENILAIAN -->
+                <div id="step3" class="step-content">
+                    <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                        <span class="w-10 h-10 bg-indigo-100 text-indigo-700 flex items-center justify-center rounded-xl">02</span>
+                        Penilaian Kualitas
+                    </h2>
+                    
+                    <div class="bg-white border-2 border-indigo-100 rounded-2xl p-4 sm:p-5 mb-8 shadow-sm">
+                        <p class="text-[11px] sm:text-sm font-bold text-indigo-900 mb-4 flex items-center gap-2 italic">
+                            ✨ Pilih angka 1 (Paling Rendah) sampai 4 (Paling Tinggi):
+                        </p>
+                        <div class="grid grid-cols-2 gap-2 sm:gap-3 text-[10px] sm:text-[11px]">
+                            <div class="flex items-center gap-1.5 sm:gap-2 bg-red-50 p-2 sm:p-2.5 rounded-lg border border-red-200">
+                                <span class="bg-[#ff3b30] text-white w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full font-bold">1</span>
+                                <span class="font-bold text-red-800 uppercase tracking-tighter">Sangat Tidak Setuju</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 sm:gap-2 bg-orange-50 p-2 sm:p-2.5 rounded-lg border border-orange-200">
+                                <span class="bg-[#ff9500] text-white w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full font-bold">2</span>
+                                <span class="font-bold text-orange-800 uppercase tracking-tighter">Tidak Setuju</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 sm:gap-2 bg-blue-50 p-2 sm:p-2.5 rounded-lg border border-blue-200">
+                                <span class="bg-[#007aff] text-white w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full font-bold">3</span>
+                                <span class="font-bold text-blue-800 uppercase tracking-tighter">Setuju</span>
+                            </div>
+                            <div class="flex items-center gap-1.5 sm:gap-2 bg-green-50 p-2 sm:p-2.5 rounded-lg border border-green-200">
+                                <span class="bg-[#34c759] text-white w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center rounded-full font-bold">4</span>
+                                <span class="font-bold text-green-800 uppercase tracking-tighter">Sangat Setuju</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-12" id="questionsContainer">
+                        <!-- Pertanyaan dirender via JS -->
+                    </div>
+
+                    <div class="mt-12 border-t border-slate-100 pt-8">
+                        <label for="feedback" class="block text-lg font-bold text-slate-800 mb-3">Umpan Balik dan Saran Bapak/Ibu Orang Tua/Wali Murid:</label>
+                        <textarea id="feedback" name="feedback" rows="4" class="w-full px-4 py-3 border-2 border-slate-200 rounded-2xl focus:border-indigo-500 outline-none text-base" placeholder="Tuliskan masukan Bapak/Ibu di sini..."></textarea>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 mt-10">
+                        <button type="button" id="submitBtn" onclick="submitForm()" class="touch-target order-1 sm:order-2 flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all flex items-center justify-center text-lg active:scale-95">
+                            Kirim Jawaban
+                        </button>
+                        <button type="button" onclick="prevStep(2)" class="touch-target order-2 sm:order-1 flex-1 bg-slate-100 text-slate-500 font-bold py-4 rounded-2xl transition-colors text-lg">Kembali</button>
+                    </div>
+                </div>
+
+                <!-- STEP 4: TERIMA KASIH (FOOTER 2 BARIS) -->
+                <div id="step4" class="step-content text-center py-6 sm:py-10">
+                    <div class="mb-8 px-1">
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl border border-indigo-50 p-2">
+                            <img src="Logo Design.png" alt="Logo SDN 19 Pemecutan" class="w-16 h-16 sm:w-20 sm:h-20 object-contain" onerror="this.src='https://via.placeholder.com/150?text=Logo+SDN+7';">
+                        </div>
+                        <h2 class="text-3xl font-black text-indigo-900 mb-6 tracking-tight uppercase">Terima Kasih</h2>
+                        
+                        <p class="text-slate-900 text-[14px] sm:text-lg font-bold mb-4 whitespace-nowrap overflow-hidden">
+                            Refleksi Bapak/Ibu telah berhasil kami terima.
+                        </p>
+                        
+                        <p class="text-slate-600 text-xs sm:text-base leading-relaxed max-w-md mx-auto italic font-medium px-4">
+                            "Masukan/saran Bapak/Ibu sangat berharga bagi kami untuk dapat memberikan pelayanan pendidikan terbaik di SDN 19 Pemecutan."
+                        </p>
+                    </div>
+                    
+                    <!-- Footer: Struktur Tepat 2 Baris Visual -->
+                    <div class="p-6 bg-indigo-50 rounded-3xl border border-indigo-100 shadow-inner mt-8 mx-2 sm:mx-0 text-center">
+                        <!-- Baris 1 -->
+                        <p class="text-[11px] sm:text-xs font-bold text-indigo-600 italic leading-none uppercase tracking-widest">Salam hangat,</p>
+                        <!-- Baris 2 -->
+                        <p class="text-[12px] sm:text-2xl font-black text-indigo-900 mt-2 uppercase tracking-tight whitespace-nowrap overflow-hidden">Keluarga Besar SDN 19 Pemecutan</p>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <button type="button" onclick="location.reload()" class="text-slate-400 font-bold hover:text-indigo-600 underline transition-colors text-sm">Isi Kembali Form</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbw96KXZZli7QXWZ_wZ5Ld8nW7u6B_mT-sFTMja1bGOeuv9gioYFRfQGwy9gCrj6_2vitw/exec'; 
+
+        const questions = [
+            "Anak saya merasa senang dan semangat untuk pergi ke sekolah setiap hari.",
+            "Materi pelajaran disampaikan dengan cara yang mudah dipahami oleh anak.",
+            "Guru bersikap ramah, peduli, dan mudah dihubungi jika saya memiliki pertanyaan.",
+            "Sekolah memberikan informasi yang jelas mengenai perkembangan belajar anak secara rutin.",
+            "Lingkungan sekolah aman dan bebas dari tindakan perundungan (bullying).",
+            "Fasilitas sekolah (ruang kelas, toilet, perpustakaan, halaman) bersih, nyaman dan mendukung kegiatan belajar.",
+            "Kegiatan ekstrakurikuler membantu mengembangkan bakat dan minat anak saya.",
+            "Sekolah berhasil menanamkan nilai karakter dan etika yang baik pada anak.",
+            "Penugasan atau PR memiliki beban yang sesuai dengan kapasitas anak.",
+            "Secara keseluruhan, saya puas dengan kualitas pendidikan di sekolah ini."
+        ];
+
+        const qContainer = document.getElementById('questionsContainer');
+        questions.forEach((q, index) => {
+            const html = `
+                <div class="pb-10 border-b border-slate-100 last:border-0">
+                    <p class="text-slate-800 font-bold text-lg sm:text-xl mb-8 leading-snug">${index + 1}. ${q}</p>
+                    <div class="px-1">
+                        <div class="grid grid-cols-4 gap-3 sm:gap-4 w-full">
+                            ${[1,2,3,4].map(num => `
+                                <div class="relative">
+                                    <input type="radio" id="q${index}_${num}" name="q${index}" value="${num}" class="sr-only radio-${num}">
+                                    <label for="q${index}_${num}" class="touch-target w-full aspect-square border-2 border-slate-200 rounded-2xl flex flex-col items-center justify-center cursor-pointer transition-all font-bold text-2xl sm:text-3xl text-slate-400 bg-white shadow-sm active:scale-90">
+                                        ${num}
+                                    </label>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    <div class="flex justify-between mt-4 px-1">
+                        <span class="text-[9px] sm:text-[10px] font-black text-red-600 uppercase tracking-widest bg-red-50 px-2 py-1 rounded">SANGAT TIDAK SETUJU</span>
+                        <span class="text-[9px] sm:text-[10px] font-black text-green-600 uppercase tracking-widest bg-green-50 px-2 py-1 rounded">SANGAT SETUJU</span>
+                    </div>
+                </div>
+            `;
+            qContainer.innerHTML += html;
+        });
+
+        function showAlert(text) {
+            const alertBox = document.getElementById('customAlert');
+            const alertText = document.getElementById('alertText');
+            alertText.innerText = text;
+            alertBox.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { alertBox.classList.add('hidden'); }, 5000);
+        }
+
+        function nextStep(step) {
+            const target = document.getElementById('step' + step);
+            if (target) {
+                document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function prevStep(step) {
+            document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function validateStep2() {
+            const parent = document.getElementById('parent_name').value.trim();
+            const student = document.getElementById('student_name').value.trim();
+            const grade = document.getElementById('grade').value;
+            const nameRegex = /^[a-zA-Z\s.,']+$/;
+
+            if (!parent || parent.length < 2) {
+                showAlert("Mohon isi nama Bapak/Ibu dengan benar.");
+                return;
+            }
+            if (!student || student.length < 3 || !nameRegex.test(student)) {
+                showAlert("Nama anak harus berupa huruf, minimal 3 karakter, dan tanpa angka/simbol.");
+                return;
+            }
+            if (!grade) {
+                showAlert("Silakan pilih kelas anak Bapak/Ibu.");
+                return;
+            }
+            nextStep(3);
+        }
+
+        async function submitForm() {
+            const form = document.getElementById('reflectionForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const radios = document.querySelectorAll('input[type="radio"]:checked');
+            
+            if (radios.length < 10) {
+                showAlert("Mohon maaf, harap berikan penilaian pada seluruh 10 pertanyaan sebelum mengirim.");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="loader"></span> Mengirim...';
+            submitBtn.classList.replace('bg-emerald-600', 'bg-slate-400');
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    cache: 'no-cache',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                nextStep(4);
+            } catch (error) {
+                console.error("Error!", error);
+                showAlert("Terjadi gangguan koneksi. Silakan coba lagi.");
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Kirim Jawaban';
+                submitBtn.classList.replace('bg-slate-400', 'bg-emerald-600');
+            }
+        }
+    </script>
+</body>
+
+</html>
+
